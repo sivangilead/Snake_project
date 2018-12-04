@@ -1,0 +1,63 @@
+{
+  "name": "FullStackTemplate",
+  "version": "1.0.0",
+  "description": "A Template for creating a Full Stack Web Application using Python, NPM, Webpack and React",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack -p --progress --config webpack.config.js",
+    "dev-build": "webpack --progress -d --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --progress -d --config webpack.config.js --watch",
+    "dev": "NODE_ENV='development' webpack-dev-server --inline --hot"
+  },
+  "keywords": [
+    "fullstack",
+    "template",
+    "python",
+    "react",
+    "npm",
+    "webpack"
+  ],
+  "author": "Angela Branaes",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "7.0.0-beta.54",
+    "@babel/plugin-proposal-decorators": "7.0.0-beta.54",
+    "@babel/plugin-proposal-export-namespace-from": "7.0.0-beta.54",
+    "@babel/plugin-proposal-function-sent": "7.0.0-beta.54",
+    "@babel/plugin-proposal-json-strings": "7.0.0-beta.54",
+    "@babel/plugin-proposal-numeric-separator": "7.0.0-beta.54",
+    "@babel/plugin-proposal-throw-expressions": "7.0.0-beta.54",
+    "@babel/plugin-syntax-dynamic-import": "7.0.0-beta.54",
+    "@babel/plugin-syntax-import-meta": "7.0.0-beta.54",
+    "@babel/polyfill": "^7.0.0-beta.55",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0-beta.55",
+    "@babel/register": "^7.0.0-beta.55",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.6",
+    "babel-loader": "^8.0.0-beta.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "html-webpack-plugin": "^3.2.0",
+    "prettier": "1.15.3",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "redux-devtools-extension": "^2.13.7",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "konva": "^2.5.1",
+    "react-konva": "^16.6.31",
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
+  }
+}

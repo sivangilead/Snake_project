@@ -3,10 +3,12 @@ import {render} from 'react-dom';
 import Board from './Board';
 import {Stage, Layer, Rect, Text} from 'react-konva';
 import Snake from './Snake';
+import Score from './Score';
 import Food from './Food';
 import StartButton from './StartButton';
 import Konva from 'konva';
 import {connect} from 'react-redux';
+import {updateScore, resetScore} from '../store/score';
 
 let initialState = {
   direction: 'right',
@@ -101,6 +103,7 @@ class Main extends Component {
     let max_width = this.state.board.max_width;
     let food_height = this.state.food_position.y;
     let food_width = this.state.food_position.x;
+    let resetScore = this.props.resetScore;
     //snake exceeding board limitaion
     if (current_width < 0 || current_width >= max_width) {
       let flag = confirm('Game Over');
@@ -108,6 +111,7 @@ class Main extends Component {
         clearInterval(this.state.interval_id);
         await this.setState(initialState);
         await this.setState({snake_tail: []});
+        resetScore();
         direction = this.state.direction;
         current_height = this.state.snake_position.y;
         current_width = this.state.snake_position.x;
@@ -122,7 +126,7 @@ class Main extends Component {
         clearInterval(this.state.interval_id);
         await this.setState(initialState);
         await this.setState({snake_tail: []});
-        console.log(this.state.snake_tail);
+        resetScore();
         direction = this.state.direction;
         current_height = this.state.snake_position.y;
         current_width = this.state.snake_position.x;
@@ -162,6 +166,7 @@ class Main extends Component {
       this.setState({snake_tail: tail});
       let updatedSpeed = this.state.speed - 10;
       this.setState({speed: updatedSpeed});
+      this.props.updateScore();
       clearInterval(this.state.interval_id);
       let interval_id = setInterval(this.move_snake, this.state.speed);
       this.setState({interval_id: interval_id});
@@ -196,9 +201,18 @@ class Main extends Component {
           </Layer>
         </Stage>
         <StartButton startGame={this.startGame} />
+        <Score />
       </div>
     );
   }
 }
 
-export default Main;
+const mapDispatch = dispatch => ({
+  updateScore: () => dispatch(updateScore()),
+  resetScore: () => dispatch(resetScore()),
+});
+
+export default connect(
+  null,
+  mapDispatch,
+)(Main);

@@ -16,8 +16,8 @@ class Snake extends Component {
   render() {
     return (
       <Rect
-        x={this.props.snake_position.x}
-        y={this.props.snake_position.y}
+        x={this.props.posX}
+        y={this.props.posY}
         width={10}
         height={10}
         fill={this.state.color}
@@ -26,10 +26,4 @@ class Snake extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    snake_position: state.snake.snake_position,
-  };
-};
-
-export default connect(mapStateToProps)(Snake);
+export default Snake;

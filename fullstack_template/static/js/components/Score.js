@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 const Score = function(props) {
-  return <div>{props.score}</div>;
+  return <div>Score:{props.score}</div>;
 };
 
 const mapState = state => ({

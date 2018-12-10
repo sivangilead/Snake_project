@@ -213,7 +213,7 @@ class Main extends Component {
 
 const mapStateToProps = state => {
   return {
-    score: state.score,
+    score: state.score.current,
     name: state.user,
   };
 };

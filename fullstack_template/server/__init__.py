@@ -15,7 +15,7 @@ def create_app(test_config=None):
     from .models import User
 
     with app.app_context():
-#        db.drop_all()
+        db.drop_all()
         db.create_all()
     #class User(db.Model):
 	#	id = db.Column(db.Integer, primary_key=True)

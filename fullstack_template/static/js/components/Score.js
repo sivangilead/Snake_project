@@ -6,7 +6,7 @@ const Score = function(props) {
 };
 
 const mapState = state => ({
-  score: state.score,
+  score: state.score.current,
 });
 
 export default connect(

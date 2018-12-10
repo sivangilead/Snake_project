@@ -1,25 +1,17 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {connect} from 'react-redux';
-import axios from 'axios';
+import {updateTopScore} from '../store/score';
 class TopScore extends Component {
-  constructor() {
-    super();
-    this.state = {topScore: 0};
-  }
   async componentDidMount() {
-    let nameArr = this.props.name.split(' ');
-    console.log(nameArr);
-    const {data} = await axios.get(
-      `/api/score?firstname=${nameArr[0]}&lastname=${nameArr[1]}`,
-    );
-    this.setState({topScore: data[0]});
+    let name = this.props.name;
+    this.props.updateTopScore(name);
   }
 
   render() {
     return (
       <div>
-        <h1>My Top Score:{this.state.topScore} </h1>
+        <h1>My Top Score:{this.props.topscore} </h1>
       </div>
     );
   }
@@ -28,10 +20,15 @@ class TopScore extends Component {
 const mapStateToProps = state => {
   return {
     name: state.user,
+    topscore: state.score.topscore,
   };
 };
 
+const mapDispatch = dispatch => ({
+  updateTopScore: topscore => dispatch(updateTopScore(topscore)),
+});
+
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatch,
 )(TopScore);

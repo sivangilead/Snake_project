@@ -29,12 +29,13 @@ def update_score():
     first_name=data["firstname"]
     last_name=data["lastname"]
     newuser = User.query.filter_by(firstname=first_name,lastname=last_name).first()
-    if newuser.score == None or newuser.score<score:
+    if newuser.score<score:
         newuser.score=score
         db.session.commit()
-        return 'update score'
+        print(json.dumps(score))
+        return json.dumps(score)
     else:
-        return 'lower score'
+        return 'None'
 
 @api.route("/score/",methods=["GET"])
 def get_score():

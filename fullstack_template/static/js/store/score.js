@@ -3,10 +3,13 @@ import axios from 'axios';
 // ACTION TYPES
 const UPDATE_SCORE = 'UPDATE_SCORE';
 const INCREMENT_SCORE = 'INCREMENT_SCORE';
+const TOP_SCORE = 'TOP SCORE';
 
 // INITIAL STATE
-const initialState = 0;
-
+const initialState = {
+  current: 0,
+  topscore: 0,
+};
 // ACTION CREATORS
 export const resetScore = () => {
   return {
@@ -19,6 +22,14 @@ export const updateScore = () => {
     type: INCREMENT_SCORE,
   };
 };
+
+export const topScore = topscore => {
+  return {
+    type: TOP_SCORE,
+    topscore: topscore,
+  };
+};
+
 //THUNK CREATORS
 export const resetScoreThunk = scoreData => async dispatch => {
   try {
@@ -30,7 +41,22 @@ export const resetScoreThunk = scoreData => async dispatch => {
       firstname: nameArr[0],
       lastname: nameArr[1],
     });
+    if (Number.isInteger(data)) {
+      dispatch(topScore(data));
+    }
     dispatch(resetScore());
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const updateTopScore = name => async dispatch => {
+  try {
+    let nameArr = name.split(' ');
+    const {data} = await axios.get(
+      `/api/score?firstname=${nameArr[0]}&lastname=${nameArr[1]}`,
+    );
+    dispatch(topScore(data[0]));
   } catch (err) {
     console.error(err);
   }
@@ -40,9 +66,11 @@ export const resetScoreThunk = scoreData => async dispatch => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_SCORE:
-      return action.total;
+      return {...state, current: action.total};
     case INCREMENT_SCORE:
-      return state + 1;
+      return {...state, current: state.current + 1};
+    case TOP_SCORE:
+      return {...state, topscore: action.topscore};
     default:
       return state;
   }

@@ -19,21 +19,22 @@ export const updateScore = () => {
     type: INCREMENT_SCORE,
   };
 };
-// THUNK CREATORS
-//export const setHighScore = (
-//  score,
-//  currentCategory,
-//  user,
-//) => async dispatch => {
-//  try {
-//    const res = await axios.put(`/api/users/${user.id}/scores`, {
-//      score: score,
-//      category: currentCategory,
-//    });
-//  } catch (err) {
-//    console.error(err);
-//  }
-//};
+//THUNK CREATORS
+export const resetScoreThunk = scoreData => async dispatch => {
+  try {
+    console.log('hi from redux');
+    const score = scoreData[0];
+    const nameArr = scoreData[1].split(' ');
+    const {data} = await axios.post('/api/score', {
+      score: score,
+      firstname: nameArr[0],
+      lastname: nameArr[1],
+    });
+    dispatch(resetScore());
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // REDUCER
 const reducer = (state = initialState, action) => {

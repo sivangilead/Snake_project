@@ -5,10 +5,11 @@ import {Stage, Layer, Rect, Text} from 'react-konva';
 import Snake from './Snake';
 import Score from './Score';
 import Food from './Food';
+import TopScore from './TopScore';
 import StartButton from './StartButton';
 import Konva from 'konva';
 import {connect} from 'react-redux';
-import {updateScore, resetScore} from '../store/score';
+import {updateScore, resetScoreThunk, resetScore} from '../store/score';
 
 let initialState = {
   direction: 'right',
@@ -103,15 +104,17 @@ class Main extends Component {
     let max_width = this.state.board.max_width;
     let food_height = this.state.food_position.y;
     let food_width = this.state.food_position.x;
-    let resetScore = this.props.resetScore;
+    let resetScoreThunk = this.props.resetScoreThunk;
     //snake exceeding board limitaion
     if (current_width < 0 || current_width >= max_width) {
+      console.log('before');
+      await resetScoreThunk([this.props.score, this.props.name]);
+      console.log('after');
       let flag = confirm('Game Over');
       if (flag == true) {
         clearInterval(this.state.interval_id);
         await this.setState(initialState);
         await this.setState({snake_tail: []});
-        resetScore();
         direction = this.state.direction;
         current_height = this.state.snake_position.y;
         current_width = this.state.snake_position.x;
@@ -121,12 +124,12 @@ class Main extends Component {
         food_height = this.state.food_position.y;
       }
     } else if (current_height < 0 || current_height >= max_height) {
+      await resetScoreThunk([this.props.score, this.props.name]);
       let flag = confirm('Game Over');
       if (flag == true) {
         clearInterval(this.state.interval_id);
         await this.setState(initialState);
         await this.setState({snake_tail: []});
-        resetScore();
         direction = this.state.direction;
         current_height = this.state.snake_position.y;
         current_width = this.state.snake_position.x;
@@ -202,17 +205,25 @@ class Main extends Component {
         </Stage>
         <StartButton startGame={this.startGame} />
         <Score />
+        <TopScore />
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    score: state.score,
+    name: state.user,
+  };
+};
+
 const mapDispatch = dispatch => ({
   updateScore: () => dispatch(updateScore()),
-  resetScore: () => dispatch(resetScore()),
+  resetScoreThunk: scoreData => dispatch(resetScoreThunk(scoreData)),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatch,
 )(Main);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {updateName} from '../store/user';
+import {updateNameThunk} from '../store/user';
 import {Link} from 'react-router-dom';
 import snakeImg from '../../images/snake.jpg';
 import {withRouter} from 'react-router-dom';
@@ -20,12 +20,12 @@ class NameEntry extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  handleSubmit(evt) {
+  async handleSubmit(evt) {
     evt.preventDefault();
     const firstname = this.state.firstname;
     const lastname = this.state.lastname;
     const name = firstname + ' ' + lastname;
-    this.props.updateName(name);
+    await this.props.updateNameThunk(name);
     this.props.history.push('/game');
   }
 
@@ -74,7 +74,7 @@ const mapStateToProps = state => {
 
 const mapDispathToProps = dispatch => {
   return {
-    updateName: name => dispatch(updateName(name)),
+    updateNameThunk: name => dispatch(updateNameThunk(name)),
   };
 };
 

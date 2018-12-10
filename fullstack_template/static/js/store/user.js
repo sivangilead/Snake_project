@@ -15,20 +15,26 @@ export const updateName = name => {
 };
 
 // THUNK CREATORS
-//export const updateNameThunk = name => async dispatch => {
-//  try {
-//    const {data} = await axios.post('/api/user', {name: name});
-//    dispatch(updateName(name));
-//  } catch (err) {
-//    console.error(err);
-//  }
-//};
+export const updateNameThunk = name => async dispatch => {
+  try {
+    let nameArr = name.split(' ');
+    const {data} = await axios.post('/api/', {
+      firstname: nameArr[0],
+      lastname: nameArr[1],
+    });
+    console.log('====>', data);
+    dispatch(updateName(data));
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // REDUCER
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_NAME:
-      return action.name;
+      let name = action.name[0] + ' ' + action.name[1];
+      return name;
     default:
       return state;
   }

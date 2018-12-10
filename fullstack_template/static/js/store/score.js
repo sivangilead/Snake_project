@@ -4,11 +4,12 @@ import axios from 'axios';
 const UPDATE_SCORE = 'UPDATE_SCORE';
 const INCREMENT_SCORE = 'INCREMENT_SCORE';
 const TOP_SCORE = 'TOP SCORE';
-
+const GET_SCORES = 'GET_SCORES';
 // INITIAL STATE
 const initialState = {
   current: 0,
   topscore: 0,
+  scoresList: [],
 };
 // ACTION CREATORS
 export const resetScore = () => {
@@ -30,10 +31,16 @@ export const topScore = topscore => {
   };
 };
 
+export const updateScores = data => {
+  return {
+    type: GET_SCORES,
+    scores: data,
+  };
+};
+
 //THUNK CREATORS
 export const resetScoreThunk = scoreData => async dispatch => {
   try {
-    console.log('hi from redux');
     const score = scoreData[0];
     const nameArr = scoreData[1].split(' ');
     const {data} = await axios.post('/api/score', {
@@ -62,6 +69,15 @@ export const updateTopScore = name => async dispatch => {
   }
 };
 
+export const getScores = () => async dispatch => {
+  try {
+    const {data} = await axios.get('/api/score/topScores');
+    dispatch(updateScores(data));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // REDUCER
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -71,6 +87,8 @@ const reducer = (state = initialState, action) => {
       return {...state, current: state.current + 1};
     case TOP_SCORE:
       return {...state, topscore: action.topscore};
+    case GET_SCORES:
+      return {...state, scoresList: action.scores};
     default:
       return state;
   }

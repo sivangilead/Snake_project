@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateNameThunk} from '../store/user';
 import {Link} from 'react-router-dom';
-import snakeImg from '../../images/snake.jpg';
 import {withRouter} from 'react-router-dom';
+import LeaderBoard from './LeaderBoard';
 
 class NameEntry extends Component {
   constructor() {
@@ -16,12 +16,12 @@ class NameEntry extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(evt) {
+  handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  async handleSubmit(evt) {
-    evt.preventDefault();
+  async handleSubmit(e) {
+    e.preventDefault();
     const firstname = this.state.firstname;
     const lastname = this.state.lastname;
     const name = firstname + ' ' + lastname;
@@ -32,35 +32,32 @@ class NameEntry extends Component {
   render() {
     return (
       <div>
-        <img
-          height="180"
-          className="logo last-message text-muted"
-          src={snakeImg}
-          alt="image"
-        />
-        <h1 className="title">Ready To Play?</h1>
-        <form className="form-inline" onSubmit={this.handleSubmit}>
-          <span className="nameEntry">
+        <div className="NameEntry">
+          <h1 className="title">Ready To Play?</h1>
+          <form className="form-inline" onSubmit={this.handleSubmit}>
             <label htmlFor="name" />
-            <input
-              type="text"
-              name="firstname"
-              placeholder="first name"
-              className="form-control"
-              onChange={this.handleChange}
-              value={this.state.name}
-            />
-            <input
-              type="text"
-              name="lastname"
-              placeholder="last name"
-              className="form-control"
-              onChange={this.handleChange}
-              value={this.state.lastname}
-            />
-            <button type="submit">Continune</button>
-          </span>
-        </form>
+            <div className="inputs">
+              <input
+                type="text"
+                name="firstname"
+                placeholder="first name"
+                className="form-control"
+                onChange={this.handleChange}
+                value={this.state.name}
+              />
+              <input
+                type="text"
+                name="lastname"
+                placeholder="last name"
+                className="form-control"
+                onChange={this.handleChange}
+                value={this.state.lastname}
+              />
+              <button type="submit">Continune</button>
+            </div>
+          </form>
+        </div>
+        <LeaderBoard />
       </div>
     );
   }

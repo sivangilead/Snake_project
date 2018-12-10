@@ -10,8 +10,9 @@ class TopScore extends Component {
 
   render() {
     return (
-      <div>
-        <h1>My Top Score:{this.props.topscore} </h1>
+      <div className="topScore">
+        <h2>Hello {this.props.name}!</h2>
+        <h2>Your Top Score:{this.props.topscore} </h2>
       </div>
     );
   }

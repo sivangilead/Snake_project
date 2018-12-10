@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 class Snake extends Component {
   state = {
-    color: 'black',
+    color: 'green',
   };
   handleClick = () => {
     this.setState({

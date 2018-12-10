@@ -10,7 +10,7 @@ import StartButton from './StartButton';
 import Konva from 'konva';
 import {connect} from 'react-redux';
 import {updateScore, resetScoreThunk, resetScore} from '../store/score';
-
+import {withRouter} from 'react-router-dom';
 let initialState = {
   direction: 'right',
   board: {
@@ -76,10 +76,12 @@ class Main extends Component {
     }
   }
 
-  startGame() {
-    clearInterval(this.state.interval_id);
-    let interval_id = setInterval(this.move_snake, this.state.speed);
-    this.setState({interval_id: interval_id});
+  async startGame() {
+    await clearInterval(this.state.interval_id);
+    await this.setState(initialState);
+    await this.setState({snake_tail: []});
+    let interval_id = await setInterval(this.move_snake, this.state.speed);
+    await this.setState({interval_id: interval_id});
   }
 
   render_food() {
@@ -107,11 +109,9 @@ class Main extends Component {
     let resetScoreThunk = this.props.resetScoreThunk;
     //snake exceeding board limitaion
     if (current_width < 0 || current_width >= max_width) {
-      console.log('before');
-      await resetScoreThunk([this.props.score, this.props.name]);
-      console.log('after');
       let flag = confirm('Game Over');
       if (flag == true) {
+        await resetScoreThunk([this.props.score, this.props.name]);
         clearInterval(this.state.interval_id);
         await this.setState(initialState);
         await this.setState({snake_tail: []});
@@ -124,9 +124,9 @@ class Main extends Component {
         food_height = this.state.food_position.y;
       }
     } else if (current_height < 0 || current_height >= max_height) {
-      await resetScoreThunk([this.props.score, this.props.name]);
       let flag = confirm('Game Over');
       if (flag == true) {
+        await resetScoreThunk([this.props.score, this.props.name]);
         clearInterval(this.state.interval_id);
         await this.setState(initialState);
         await this.setState({snake_tail: []});
@@ -179,32 +179,42 @@ class Main extends Component {
 
   render() {
     return (
-      <div>
-        <Stage
-          ref={ref => {
-            this.stageRef = ref;
-          }}
-          width={this.state.board.max_width}
-          height={this.state.board.max_height}>
-          <Layer>
-            <Board />
-            <Snake
-              posX={this.state.snake_position.x}
-              posY={this.state.snake_position.y}
-            />
-            {this.state.snake_tail
-              ? this.state.snake_tail.map((tail, index) => {
-                  return <Snake key={index} posX={tail[0]} posY={tail[1]} />;
-                })
-              : null}
-            <Food
-              posX={this.state.food_position.x}
-              posY={this.state.food_position.y}
-            />
-          </Layer>
-        </Stage>
-        <StartButton startGame={this.startGame} />
-        <Score />
+      <div className="scoreBoard">
+        <div>
+          <Stage
+            ref={ref => {
+              this.stageRef = ref;
+            }}
+            width={this.state.board.max_width}
+            height={this.state.board.max_height}>
+            <Layer>
+              <Board />
+              <Snake
+                posX={this.state.snake_position.x}
+                posY={this.state.snake_position.y}
+              />
+              {this.state.snake_tail
+                ? this.state.snake_tail.map((tail, index) => {
+                    return <Snake key={index} posX={tail[0]} posY={tail[1]} />;
+                  })
+                : null}
+              <Food
+                posX={this.state.food_position.x}
+                posY={this.state.food_position.y}
+              />
+            </Layer>
+          </Stage>
+          <StartButton startGame={this.startGame} />
+          <Score />
+          <button
+            onClick={() => {
+              this.setState(initialState);
+              this.setState({snake_tail: []});
+              this.props.history.push('/');
+            }}>
+            Back to Home Page
+          </button>
+        </div>
         <TopScore />
       </div>
     );
@@ -223,7 +233,9 @@ const mapDispatch = dispatch => ({
   resetScoreThunk: scoreData => dispatch(resetScoreThunk(scoreData)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatch,
-)(Main);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatch,
+  )(Main),
+);

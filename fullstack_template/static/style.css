@@ -1,7 +1,47 @@
 body {
   font-family: sans-serif;
+  background-image: url('./images/snake.jpg');
 }
 
 .h1 {
   color: red;
+}
+
+.scoreBoard {
+  display: flex;
+}
+
+.topScore {
+  margin-left: 35vh;
+}
+
+.startBut {
+  margin: 2vh 0 0 25vw;
+}
+
+.score {
+  margin: 2vw 0 0 25vw;
+}
+
+.NameEntry {
+  margin-left: 42vw;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  margin-top: 20%;
+}
+
+form button {
+  margin-top: 20%;
+}
+
+.table {
+  width: 44%;
+  margin: auto;
+  margin-top: 5%;
 }

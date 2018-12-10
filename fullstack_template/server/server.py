@@ -37,6 +37,18 @@ def update_score():
     else:
         return 'None'
 
+@api.route("/score/topScores",methods=["GET"])
+def top_scores():
+    top_score = User.query.all()
+    scores_list=[]
+    for item in top_score:
+        scores_list.append({'firstname':item.firstname,'lastname':item.lastname, 'score':item.score})
+    sorted_scores=sorted(scores_list, key = lambda i: i['score'],reverse=True)
+    return json.dumps(sorted_scores)
+
+
+
+
 @api.route("/score/",methods=["GET"])
 def get_score():
     first_name=request.args.get('firstname')

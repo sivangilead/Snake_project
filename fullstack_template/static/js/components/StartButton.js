@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function StartButton(props) {
   return (
-    <div>
+    <div className="startBut">
       <button
         onClick={() => {
           props.startGame();

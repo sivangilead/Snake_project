@@ -5,13 +5,9 @@ import Konva from 'konva';
 
 class Board extends Component {
   state = {
-    color: 'green',
+    color: 'black',
   };
-  handleClick = () => {
-    this.setState({
-      color: Konva.Util.getRandomColor(),
-    });
-  };
+
   render() {
     return (
       <Rect
@@ -21,7 +17,6 @@ class Board extends Component {
         height={500}
         fill={this.state.color}
         shadowBlur={5}
-        onClick={this.handleClick}
       />
     );
   }

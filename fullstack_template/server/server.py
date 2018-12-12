@@ -17,10 +17,10 @@ def update_user():
         db.session.add(user1)
         db.session.commit()
         newuser = db.session.query(User.firstname,User.lastname).filter_by(firstname=first_name,lastname=last_name).first()
-        return json.dumps(newuser)
+        return json.dumps(newuser),201
     else:
         my_user = db.session.query(User.firstname,User.lastname).filter(User.id==exists).first()
-        return json.dumps(my_user)
+        return json.dumps(my_user),201
 
 @api.route("/score",methods=["POST"])
 def update_score():
@@ -33,7 +33,7 @@ def update_score():
         newuser.score=score
         db.session.commit()
         print(json.dumps(score))
-        return json.dumps(score)
+        return json.dumps(score), 201
     else:
         return 'None'
 
@@ -45,8 +45,6 @@ def top_scores():
         scores_list.append({'firstname':item.firstname,'lastname':item.lastname, 'score':item.score})
     sorted_scores=sorted(scores_list, key = lambda i: i['score'],reverse=True)
     return json.dumps(sorted_scores)
-
-
 
 
 @api.route("/score/",methods=["GET"])

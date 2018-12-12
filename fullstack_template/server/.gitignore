@@ -1,0 +1,13 @@
+.pytest_cache/
+__pychche__/
+bin/
+env/
+include/
+lib/
+lib64/
+share/
+venv/
+venvs/
+config.py
+
+

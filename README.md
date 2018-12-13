@@ -26,4 +26,8 @@ The command `pytest` will run the tests for this project.
 
 ## App created using:
 
-PostgreSql,SQLAlchemy,Flask,React,Redux
+- PostgreSql
+- SQLAlchemy
+- Flask
+- React
+- Redux

@@ -10,7 +10,7 @@ To run this application locally, inside the static directory run `npm install` t
 The command `npm run dev` will run the app in development mode on your local machine.
 
 ###Back-End server:
-You must create two database for the project: snake and test_project.
+You must create two databases for the project: snake and test_project.
 To run this application locally create a config.py file in the server directory and store your postgres credentials under the variables username and password.
 In order to run the server:
 Inside the server directory:

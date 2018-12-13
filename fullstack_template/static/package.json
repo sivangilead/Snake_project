@@ -9,7 +9,14 @@
     "watch": "webpack --progress -d --config webpack.config.js --watch",
     "dev": "NODE_ENV='development' webpack-dev-server --inline --hot"
   },
-  "keywords": ["fullstack", "template", "python", "react", "npm", "webpack"],
+  "keywords": [
+    "fullstack",
+    "template",
+    "python",
+    "react",
+    "npm",
+    "webpack"
+  ],
   "author": "Angela Branaes",
   "license": "MIT",
   "devDependencies": {

@@ -53,7 +53,7 @@ class NameEntry extends Component {
                 onChange={this.handleChange}
                 value={this.state.lastname}
               />
-              <button type="submit">Continune</button>
+              <button type="submit">Continue</button>
             </div>
           </form>
         </div>

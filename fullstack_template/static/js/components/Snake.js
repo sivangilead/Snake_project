@@ -18,8 +18,8 @@ class Snake extends Component {
       <Rect
         x={this.props.posX}
         y={this.props.posY}
-        width={10}
-        height={10}
+        width={20}
+        height={20}
         fill={this.state.color}
       />
     );

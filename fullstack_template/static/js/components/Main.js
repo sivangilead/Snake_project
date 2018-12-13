@@ -19,11 +19,11 @@ let initialState = {
   },
   snake_position: {
     x: 500,
-    y: 250,
+    y: 260,
   },
   speed: 100,
   food_position: {
-    x: 50,
+    x: 60,
     y: 100,
   },
   snake_tail: [],
@@ -87,8 +87,8 @@ class Main extends Component {
   render_food() {
     let x_max = 1000;
     let y_max = 500;
-    let posX = Math.floor((Math.random() * (x_max + 1)) / 10) * 10;
-    let posY = Math.floor((Math.random() * (y_max + 1)) / 10) * 10;
+    let posX = Math.floor((Math.random() * (x_max + 1)) / 20) * 20;
+    let posY = Math.floor((Math.random() * (y_max + 1)) / 20) * 20;
     this.setState({
       food_position: {
         x: posX,
@@ -107,6 +107,16 @@ class Main extends Component {
     let food_height = this.state.food_position.y;
     let food_width = this.state.food_position.x;
     let resetScoreThunk = this.props.resetScoreThunk;
+
+    console.log(
+      'snake pos ',
+      current_height,
+      current_width,
+      'food pos ',
+      food_height,
+      food_width,
+    );
+
     //snake exceeding board limitaion
     if (current_width < 0 || current_width >= max_width) {
       let flag = confirm('Game Over');
@@ -147,19 +157,19 @@ class Main extends Component {
 
     if (direction === 'up') {
       this.setState({
-        snake_position: {y: current_height - 10, x: current_width},
+        snake_position: {y: current_height - 20, x: current_width},
       });
     } else if (direction === 'right') {
       this.setState({
-        snake_position: {y: current_height, x: current_width + 10},
+        snake_position: {y: current_height, x: current_width + 20},
       });
     } else if (direction === 'down') {
       this.setState({
-        snake_position: {y: current_height + 10, x: current_width},
+        snake_position: {y: current_height + 20, x: current_width},
       });
     } else if (direction === 'left') {
       this.setState({
-        snake_position: {y: current_height, x: current_width - 10},
+        snake_position: {y: current_height, x: current_width - 20},
       });
     }
     if (food_height === current_height && food_width === current_width) {
@@ -167,8 +177,10 @@ class Main extends Component {
       tail.pop();
       tail.unshift([current_width, current_height]);
       this.setState({snake_tail: tail});
-      let updatedSpeed = this.state.speed - 10;
-      this.setState({speed: updatedSpeed});
+      if (this.state.speed > 30) {
+        let updatedSpeed = this.state.speed - 10;
+        this.setState({speed: updatedSpeed});
+      }
       this.props.updateScore();
       clearInterval(this.state.interval_id);
       let interval_id = setInterval(this.move_snake, this.state.speed);

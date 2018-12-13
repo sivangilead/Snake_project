@@ -34,7 +34,6 @@ def db(app, request):
     """
     Returns session-wide initialised database.
     """
-    print("inside db")
     with app.app_context():
         _db.drop_all()
         db=_db
@@ -52,7 +51,6 @@ def db(app, request):
 
 @pytest.fixture(scope='function')
 def session(db, request):
-    print("inside session")
     """Creates a new database session for a test."""
     connection = db.engine.connect()
     transaction = connection.begin()
@@ -76,7 +74,6 @@ def truncate_db(db, session):
     # delete all table data (but keep tables)
     meta = db.metadata
     for table in reversed(meta.sorted_tables):
-        print("Truncating table ", table)
         session.execute(table.delete())
     session.commit()
 

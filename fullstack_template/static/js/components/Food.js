@@ -7,18 +7,14 @@ class Snake extends Component {
   state = {
     color: 'red',
   };
-  handleClick = () => {
-    this.setState({
-      color: Konva.Util.getRandomColor(),
-    });
-  };
+
   render() {
     return (
       <Rect
         x={this.props.posX}
         y={this.props.posY}
-        width={10}
-        height={10}
+        width={20}
+        height={20}
         fill={this.state.color}
       />
     );

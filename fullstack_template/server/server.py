@@ -32,7 +32,6 @@ def update_score():
     if newuser.score<score:
         newuser.score=score
         db.session.commit()
-        print(json.dumps(score))
         return json.dumps(score), 201
     else:
         return 'None'

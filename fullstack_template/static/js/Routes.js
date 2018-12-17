@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Main from './components/Main';
 import NameEntry from './components/NameEntry';
 import {Route} from 'react-router-dom';
+import {hot} from 'react-hot-loader/root';
 
 class Routes extends Component {
   render() {
@@ -14,4 +15,4 @@ class Routes extends Component {
   }
 }
 
-export default Routes;
+export default hot(Routes);

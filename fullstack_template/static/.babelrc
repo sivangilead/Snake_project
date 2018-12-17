@@ -10,6 +10,7 @@
       "@babel/plugin-syntax-import-meta",
       "@babel/plugin-proposal-class-properties",
       "@babel/plugin-proposal-json-strings",
+      "react-hot-loader/babel",
       [
         "@babel/plugin-proposal-decorators",
         {

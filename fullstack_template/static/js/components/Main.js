@@ -21,7 +21,7 @@ let initialState = {
     x: 500,
     y: 260,
   },
-  speed: 100,
+  speed: 200,
   food_position: {
     x: 60,
     y: 100,
@@ -76,12 +76,12 @@ class Main extends Component {
     }
   }
 
-  async startGame() {
-    await clearInterval(this.state.interval_id);
-    await this.setState(initialState);
-    await this.setState({snake_tail: []});
-    let interval_id = await setInterval(this.move_snake, this.state.speed);
-    await this.setState({interval_id: interval_id});
+  startGame() {
+    clearInterval(this.state.interval_id);
+    this.setState(initialState);
+    this.setState({snake_tail: []});
+    let interval_id = setInterval(this.move_snake, this.state.speed);
+    this.setState({interval_id: interval_id});
   }
 
   render_food() {
@@ -107,15 +107,6 @@ class Main extends Component {
     let food_height = this.state.food_position.y;
     let food_width = this.state.food_position.x;
     let resetScoreThunk = this.props.resetScoreThunk;
-
-    console.log(
-      'snake pos ',
-      current_height,
-      current_width,
-      'food pos ',
-      food_height,
-      food_width,
-    );
 
     //snake exceeding board limitaion
     if (current_width < 0 || current_width >= max_width) {

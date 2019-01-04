@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {connect} from 'react-redux';
 import {updateTopScore} from '../store/score';
+
 class TopScore extends Component {
-  async componentDidMount() {
+  componentDidMount() {
     let name = this.props.name;
     this.props.updateTopScore(name);
   }

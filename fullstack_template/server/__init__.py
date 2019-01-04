@@ -7,7 +7,10 @@ from .shared_db import db
 
 def create_app(test_config=None):
     app = Flask(__name__)
-    if test_config!=None:
+    docker=os.environ.get("FLASK_ENV","docker")
+    if docker is not None:
+        app.config['SQLALCHEMY_DATABASE_URI']="postgresql://testuser:password@postgres/testdb"
+    elif test_config!=None:
         app.config['SQLALCHEMY_DATABASE_URI']=test_config['SQLALCHEMY_DATABASE_URI']
     else:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%s:%s@localhost:5432/snake'%(config.username,config.password)

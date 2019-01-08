@@ -21,7 +21,7 @@ let initialState = {
     x: 500,
     y: 260,
   },
-  speed: 200,
+  speed: 150,
   food_position: {
     x: 60,
     y: 100,
@@ -148,19 +148,19 @@ class Main extends Component {
 
     if (direction === 'up') {
       this.setState({
-        snake_position: {y: current_height - 20, x: current_width},
+        snake_position: {y: current_height - 10, x: current_width},
       });
     } else if (direction === 'right') {
       this.setState({
-        snake_position: {y: current_height, x: current_width + 20},
+        snake_position: {y: current_height, x: current_width + 10},
       });
     } else if (direction === 'down') {
       this.setState({
-        snake_position: {y: current_height + 20, x: current_width},
+        snake_position: {y: current_height + 10, x: current_width},
       });
     } else if (direction === 'left') {
       this.setState({
-        snake_position: {y: current_height, x: current_width - 20},
+        snake_position: {y: current_height, x: current_width - 10},
       });
     }
     if (food_height === current_height && food_width === current_width) {
@@ -168,12 +168,10 @@ class Main extends Component {
       tail.pop();
       tail.unshift([current_width, current_height]);
       this.setState({snake_tail: tail});
-      if (this.state.speed > 30) {
-        let updatedSpeed = this.state.speed - 10;
-        this.setState({speed: updatedSpeed});
-      }
+      let updatedSpeed = this.state.speed - 10;
       this.props.updateScore();
       clearInterval(this.state.interval_id);
+      await this.setState({speed: updatedSpeed});
       let interval_id = setInterval(this.move_snake, this.state.speed);
       this.setState({interval_id: interval_id});
       this.render_food();

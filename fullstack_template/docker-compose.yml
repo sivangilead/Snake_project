@@ -1,13 +1,15 @@
-version: '3'
+version: '3.6'
 services:
   web_server:
     build: ./static
     container_name: nginx
+    #networks:
+      #- nginx-net
     ports:
-      - "9000:80"
-    network_mode: "host"
+      - "80:80"
+        #network_mode: "host"
     depends_on:
-        - app
+      - app
   postgres:
     restart: always
     image: postgres:10
@@ -16,7 +18,8 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=testdb
         #volumes:
-        #- ./postgres-data/postgres:/var/lib/postgresql/data
+        #networks:
+      #- nginx-net       #- ./postgres-data/postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
   app:
@@ -34,6 +37,11 @@ services:
       - run
       - --host=0.0.0.0
       - --port=5000
+        #networks:
+      # - nginx-net
     depends_on:
       - postgres
+        #networks:
 
+  #nginx-net:
+    #driver: bridge

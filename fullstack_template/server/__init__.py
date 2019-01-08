@@ -1,5 +1,5 @@
 import os
-from .config import *
+#from .config import *
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from .shared_db import db
